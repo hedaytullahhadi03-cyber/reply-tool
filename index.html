@@ -1,67 +1,71 @@
+
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Reply AI</title>
+<title>Sales Message AI</title>
 
 <style>
-body {
+body{
   margin:0;
   font-family:sans-serif;
   background:#0f172a;
-  color:white;
+  color:#fff;
   display:flex;
   justify-content:center;
 }
 
-.container {
-  width:95%;
+.container{
+  width:100%;
   max-width:420px;
   padding:20px;
 }
 
-h2 { text-align:center; }
-
-textarea {
-  width:100%;
-  padding:10px;
-  border-radius:10px;
+h1{
+  text-align:center;
+  margin-bottom:20px;
 }
 
-button, select {
+textarea, select, button{
   width:100%;
-  margin-top:10px;
-  padding:10px;
+  padding:12px;
+  margin:8px 0;
   border-radius:10px;
   border:none;
 }
 
-.voice { background:#3b82f6; color:white; }
-.generate { background:#22c55e; color:white; }
+textarea{
+  height:80px;
+}
 
-.reply {
+button{
+  background:#22c55e;
+  color:#fff;
+  font-weight:bold;
+}
+
+.reply{
   background:#1e293b;
-  padding:10px;
+  padding:12px;
   margin-top:10px;
   border-radius:10px;
 }
 
-.actions {
+.actions{
   display:flex;
-  gap:5px;
+  gap:10px;
+  margin-top:8px;
 }
 
-.copy { background:#f59e0b; flex:1; }
-.whatsapp { background:#25D366; flex:1; }
+.copy{
+  background:#f59e0b;
+  flex:1;
+}
 
-.ad {
-  margin:15px 0;
-  background:#111827;
-  text-align:center;
-  padding:10px;
-  border-radius:10px;
-  font-size:12px;
+.wa{
+  background:#25d366;
+  flex:1;
 }
 </style>
 </head>
@@ -70,24 +74,19 @@ button, select {
 
 <div class="container">
 
-<h2>💬 Smart Reply AI</h2>
+<h1>💼 Sales Message AI</h1>
 
-<textarea id="input" placeholder="Message yaha paste karo..."></textarea>
+<textarea id="msg" placeholder="Paste message..."></textarea>
 
-<button class="voice" onclick="voice()">🎤 Voice Input</button>
-
-<select id="tone">
-  <option value="normal">Normal</option>
-  <option value="crush">Crush ❤️</option>
-  <option value="attitude">Attitude 😎</option>
+<select id="type">
+  <option value="auto">Auto Detect</option>
+  <option value="dm">DM Start</option>
+  <option value="pricing">Pricing</option>
+  <option value="followup">Follow Up</option>
+  <option value="closing">Closing</option>
 </select>
 
-<button class="generate" onclick="generate()">Smart Reply</button>
-
-<div class="ad">
-  <!-- AdSense placeholder -->
-  Ad space (Google AdSense yaha lagega)
-</div>
+<button onclick="generate()">Generate Reply</button>
 
 <div id="output"></div>
 
@@ -95,88 +94,88 @@ button, select {
 
 <script>
 
-// 🎤 Voice input
-function voice(){
-  let r = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  r.lang = "hi-IN";
-  r.start();
-  r.onresult = e => {
-    document.getElementById("input").value = e.results[0][0].transcript;
-  };
+function random(arr){
+  return arr.sort(()=>0.5-Math.random()).slice(0,3);
 }
 
-// 🌐 Language detect (simple)
-function detectLang(text){
-  return /[a-zA-Z]/.test(text) ? "en" : "hi";
+function detectType(msg){
+  if(msg.includes("price") || msg.includes("kitna") || msg.includes("₹")) return "pricing";
+  if(msg.includes("hello") || msg.includes("hi")) return "dm";
+  if(msg.includes("?" )) return "followup";
+  return "closing";
 }
 
-// 🤖 Smart reply logic
 function generate(){
-  let text = document.getElementById("input").value.toLowerCase();
-  let tone = document.getElementById("tone").value;
-  let lang = detectLang(text);
-  let out = document.getElementById("output");
-  out.innerHTML = "";
 
-  let replies = [];
+let msg = document.getElementById("msg").value.toLowerCase();
+let type = document.getElementById("type").value;
 
-  // 🔥 Smart understanding
-  if(text.includes("kya") || text.includes("what")){
-    replies = lang=="hi" ? 
-      ["Haan batao?", "Kya hua?", "Bol na 🙂"] :
-      ["Yes tell me?", "What happened?", "Go ahead 🙂"];
-  }
-
-  else if(text.includes("free")){
-    replies = lang=="hi" ?
-      ["Haan free hoon", "Thoda busy hoon", "Bolo kya kaam hai"] :
-      ["Yes I'm free", "Little busy", "Tell me"];
-  }
-
-  else if(text.includes("mil") || text.includes("meet")){
-    replies = lang=="hi" ?
-      ["Haan mil sakte hain", "Time batao", "Kal milte hain"] :
-      ["Yes we can meet", "Tell time", "Let's meet tomorrow"];
-  }
-
-  else {
-    replies = lang=="hi" ?
-      ["Theek hai 👍", "Samajh gaya", "Okay 🙂"] :
-      ["Okay 👍", "Got it", "Alright 🙂"];
-  }
-
-  // 🎯 Tone modify
-  if(tone=="crush"){
-    replies = replies.map(r => r + " ❤️");
-  }
-
-  if(tone=="attitude"){
-    replies = replies.map(r => r + " 😎");
-  }
-
-  // 📦 Show replies
-  replies.forEach(r => {
-    out.innerHTML += `
-      <div class="reply">
-        ${r}
-        <div class="actions">
-          <button class="copy" onclick="copy('${r}')">Copy</button>
-          <button class="whatsapp" onclick="send('${r}')">WhatsApp</button>
-        </div>
-      </div>
-    `;
-  });
+if(type === "auto"){
+  type = detectType(msg);
 }
 
-// 📋 Copy
-function copy(t){
-  navigator.clipboard.writeText(t);
-  alert("Copied!");
+let replies = [];
+
+if(type === "dm"){
+replies = [
+"Hey 👋 thanks for reaching out!",
+"Hi 😊 kaise help kar sakta hu?",
+"Hello! Batao kya chahiye?"
+];
 }
 
-// 📲 WhatsApp
-function send(t){
-  window.open("https://wa.me/?text="+encodeURIComponent(t));
+if(type === "pricing"){
+replies = [
+"Price ₹499 hai 👍 interested ho?",
+"Sirf ₹499 me mil jayega 😊",
+"Affordable hai — ₹499 only 💯"
+];
+}
+
+if(type === "followup"){
+replies = [
+"Still interested? 😊",
+"Update chahiye kya?",
+"Batana agar lena ho 👍"
+];
+}
+
+if(type === "closing"){
+replies = [
+"Chalo confirm karein? 🚀",
+"Aap ready ho toh start karte hain 👍",
+"Deal close karein? 😊"
+];
+}
+
+show(random(replies));
+}
+
+function show(arr){
+
+let out = document.getElementById("output");
+out.innerHTML = "";
+
+arr.forEach(r=>{
+  out.innerHTML += `
+  <div class="reply">
+    ${r}
+    <div class="actions">
+      <button class="copy" onclick="copyText('${r}')">Copy</button>
+      <button class="wa" onclick="sendWA('${r}')">WhatsApp</button>
+    </div>
+  </div>
+  `;
+});
+}
+
+function copyText(text){
+navigator.clipboard.writeText(text);
+alert("Copied!");
+}
+
+function sendWA(text){
+window.open("https://wa.me/?text="+encodeURIComponent(text));
 }
 
 </script>
