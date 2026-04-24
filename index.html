@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Reply AI</title>
+
+<style>
+body {
+  margin:0;
+  font-family:sans-serif;
+  background:#0f172a;
+  color:white;
+  display:flex;
+  justify-content:center;
+}
+
+.container {
+  width:95%;
+  max-width:420px;
+  padding:20px;
+}
+
+h2 { text-align:center; }
+
+textarea {
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+}
+
+button, select {
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
+
+.voice { background:#3b82f6; color:white; }
+.generate { background:#22c55e; color:white; }
+
+.reply {
+  background:#1e293b;
+  padding:10px;
+  margin-top:10px;
+  border-radius:10px;
+}
+
+.actions {
+  display:flex;
+  gap:5px;
+}
+
+.copy { background:#f59e0b; flex:1; }
+.whatsapp { background:#25D366; flex:1; }
+
+.ad {
+  margin:15px 0;
+  background:#111827;
+  text-align:center;
+  padding:10px;
+  border-radius:10px;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>💬 Smart Reply AI</h2>
+
+<textarea id="input" placeholder="Message yaha paste karo..."></textarea>
+
+<button class="voice" onclick="voice()">🎤 Voice Input</button>
+
+<select id="tone">
+  <option value="normal">Normal</option>
+  <option value="crush">Crush ❤️</option>
+  <option value="attitude">Attitude 😎</option>
+</select>
+
+<button class="generate" onclick="generate()">Smart Reply</button>
+
+<div class="ad">
+  <!-- AdSense placeholder -->
+  Ad space (Google AdSense yaha lagega)
+</div>
+
+<div id="output"></div>
+
+</div>
+
+<script>
+
+// 🎤 Voice input
+function voice(){
+  let r = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  r.lang = "hi-IN";
+  r.start();
+  r.onresult = e => {
+    document.getElementById("input").value = e.results[0][0].transcript;
+  };
+}
+
+// 🌐 Language detect (simple)
+function detectLang(text){
+  return /[a-zA-Z]/.test(text) ? "en" : "hi";
+}
+
+// 🤖 Smart reply logic
+function generate(){
+  let text = document.getElementById("input").value.toLowerCase();
+  let tone = document.getElementById("tone").value;
+  let lang = detectLang(text);
+  let out = document.getElementById("output");
+  out.innerHTML = "";
+
+  let replies = [];
+
+  // 🔥 Smart understanding
+  if(text.includes("kya") || text.includes("what")){
+    replies = lang=="hi" ? 
+      ["Haan batao?", "Kya hua?", "Bol na 🙂"] :
+      ["Yes tell me?", "What happened?", "Go ahead 🙂"];
+  }
+
+  else if(text.includes("free")){
+    replies = lang=="hi" ?
+      ["Haan free hoon", "Thoda busy hoon", "Bolo kya kaam hai"] :
+      ["Yes I'm free", "Little busy", "Tell me"];
+  }
+
+  else if(text.includes("mil") || text.includes("meet")){
+    replies = lang=="hi" ?
+      ["Haan mil sakte hain", "Time batao", "Kal milte hain"] :
+      ["Yes we can meet", "Tell time", "Let's meet tomorrow"];
+  }
+
+  else {
+    replies = lang=="hi" ?
+      ["Theek hai 👍", "Samajh gaya", "Okay 🙂"] :
+      ["Okay 👍", "Got it", "Alright 🙂"];
+  }
+
+  // 🎯 Tone modify
+  if(tone=="crush"){
+    replies = replies.map(r => r + " ❤️");
+  }
+
+  if(tone=="attitude"){
+    replies = replies.map(r => r + " 😎");
+  }
+
+  // 📦 Show replies
+  replies.forEach(r => {
+    out.innerHTML += `
+      <div class="reply">
+        ${r}
+        <div class="actions">
+          <button class="copy" onclick="copy('${r}')">Copy</button>
+          <button class="whatsapp" onclick="send('${r}')">WhatsApp</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// 📋 Copy
+function copy(t){
+  navigator.clipboard.writeText(t);
+  alert("Copied!");
+}
+
+// 📲 WhatsApp
+function send(t){
+  window.open("https://wa.me/?text="+encodeURIComponent(t));
+}
+
+</script>
+
+</body>
+</html>
