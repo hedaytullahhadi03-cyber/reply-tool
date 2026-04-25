@@ -6,6 +6,253 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sales Message AI</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+display:flex;
+background:#0f172a;
+color:white;
+}
+
+/* Sidebar */
+.sidebar{
+width:220px;
+height:100vh;
+background:#020617;
+padding:20px;
+}
+
+.sidebar h2{
+margin-bottom:20px;
+}
+
+.sidebar button{
+width:100%;
+margin:6px 0;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#1e293b;
+color:white;
+cursor:pointer;
+}
+
+.sidebar button:hover{
+background:#6366f1;
+}
+
+/* Main */
+.main{
+flex:1;
+padding:20px;
+}
+
+.header{
+font-size:24px;
+margin-bottom:20px;
+}
+
+.box{
+background:#1e293b;
+padding:20px;
+border-radius:12px;
+}
+
+input, select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+}
+
+button.generate{
+width:100%;
+margin-top:15px;
+padding:12px;
+border:none;
+border-radius:8px;
+background:linear-gradient(90deg,#6366f1,#a855f7);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.reply{
+background:#020617;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.actions button{
+flex:1;
+padding:8px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.copy{
+background:#f59e0b;
+}
+
+.wa{
+background:#22c55e;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+<h2>💼 Sales AI</h2>
+
+<button onclick="setType('dm')">DM Start</button>
+<button onclick="setType('follow')">Follow-up</button>
+<button onclick="setType('price')">Pricing</button>
+<button onclick="setType('deal')">Closing</button>
+
+</div>
+
+<!-- Main -->
+<div class="main">
+
+<div class="header">Create Smart Replies</div>
+
+<div class="box">
+
+<input id="userInput" placeholder="Client ne kya message kiya?">
+
+<select id="tone">
+<option value="pro">Professional</option>
+<option value="friendly">Friendly</option>
+<option value="bold">Confident</option>
+</select>
+
+<button class="generate" onclick="generate()">Generate Replies</button>
+
+<div id="output"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let currentType = "dm";
+
+function setType(type){
+currentType = type;
+}
+
+/* Reply Database */
+const data = {
+
+dm:[
+"Hey! Thanks for reaching out 😊 How can I help you?",
+"Hi there! Glad you messaged. Tell me your requirement 👍",
+"Hello! I’d love to help you with your project."
+],
+
+follow:[
+"Just checking in 😊 Did you get a chance to see my last message?",
+"Hey! Following up on this. Let me know your thoughts.",
+"Hi again! I’m available if you need any help."
+],
+
+price:[
+"My price starts from ₹499 depending on your requirement.",
+"It will cost around ₹999 for this service. Let me know if that works.",
+"Pricing depends on details, but approx ₹799. I ensure quality work."
+],
+
+deal:[
+"Let’s finalize this 👍 I can start immediately.",
+"If you're ready, we can get started today.",
+"Looking forward to working with you! Shall we proceed?"
+]
+
+};
+
+/* Smart Generator */
+function generate(){
+
+let input = document.getElementById("userInput").value.toLowerCase();
+
+let replies = [...data[currentType]];
+
+/* smart variation */
+if(input.includes("price") || input.includes("cost")){
+replies = data.price;
+}
+
+if(input.includes("hello") || input.includes("hi")){
+replies = data.dm;
+}
+
+/* randomize */
+replies.sort(()=>0.5 - Math.random());
+
+let output = document.getElementById("output");
+output.innerHTML = "";
+
+replies.slice(0,3).forEach(r=>{
+
+let div = document.createElement("div");
+div.className = "reply";
+
+div.innerHTML = `
+${r}
+<div class="actions">
+<button class="copy" onclick="copyText('${r}')">Copy</button>
+<button class="wa" onclick="sendWA('${r}')">WhatsApp</button>
+</div>
+`;
+
+output.appendChild(div);
+
+});
+
+}
+
+/* Copy */
+function copyText(text){
+navigator.clipboard.writeText(text);
+alert("Copied!");
+}
+
+/* WhatsApp */
+function sendWA(text){
+window.open("https://wa.me/?text="+encodeURIComponent(text));
+}
+
+</script>
+
+</body>
+</html> html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Message AI</title>
+
 <style>
 body{
   margin:0;
