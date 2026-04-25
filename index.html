@@ -89,3 +89,34 @@
 
 </body>
 </html>
+<script>
+
+const btn = document.getElementById("generateBtn");
+const output = document.getElementById("planOutput");
+  <div id="planOutput">
+</div>
+
+btn.addEventListener("click", () => {
+  <button id="generateBtn" class="btn full">Generate Plan ✨</button>
+
+  const plans = [
+    ["📘 Study (30 min)", "☕ Break (10 min)", "📝 Practice (20 min)"],
+    ["💻 Work (40 min)", "☕ Break (10 min)", "📊 Task Finish (30 min)"],
+    ["🎯 Focus Task (25 min)", "☕ Break (5 min)", "🔥 Deep Work (30 min)"],
+    ["📖 Revision (20 min)", "☕ Break (10 min)", "✍️ Notes (20 min)"]
+  ];
+
+  let randomPlan = plans[Math.floor(Math.random() * plans.length)];
+
+  output.innerHTML = "";
+
+  randomPlan.forEach(item => {
+    let div = document.createElement("div");
+    div.className = "plan-item";
+    div.innerText = item;
+    output.appendChild(div);
+  });
+
+});
+
+</script>
