@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+}
+
+/* NAV */
+.nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 30px;
+}
+.nav a {
+  margin:0 10px;
+  color:#cbd5f5;
+  text-decoration:none;
+}
+
+/* HERO */
+.hero {
+  text-align:center;
+  padding:40px;
+}
+.hero h1 {
+  font-size:36px;
+}
+.hero span {
+  color:#8b5cf6;
+}
+
+/* MAIN */
+.main {
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:20px;
+  flex-wrap:wrap;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding:20px;
+  border-radius:15px;
+  width:300px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* INPUT */
+select {
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+  border:none;
+}
+
+/* BUTTON */
+.btn {
+  background: linear-gradient(90deg,#7c3aed,#3b82f6);
+  border:none;
+  padding:10px 15px;
+  border-radius:10px;
+  color:white;
+  cursor:pointer;
+}
+.full {
+  width:100%;
+}
+.small {
+  padding:8px;
+}
+.green {
+  background:green;
+}
+
+/* OUTPUT */
+.plan-item {
+  background:#1e293b;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+}
+
+/* ACTION */
+.actions {
+  display:flex;
+  gap:10px;
+}
+
+/* FEATURES */
+.features {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  padding:30px;
+}
+.f-card {
+  background:#1e293b;
+  padding:15px;
+  border-radius:10px;
+}
+
+/* ABOUT */
+.about {
+  text-align:center;
+  padding:30px;
+}
