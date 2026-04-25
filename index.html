@@ -1,428 +1,131 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sales Message AI</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
-body{
-display:flex;
-background:#0f172a;
-color:white;
-}
-
-/* Sidebar */
-.sidebar{
-width:220px;
-height:100vh;
-background:#020617;
-padding:20px;
-}
-
-.sidebar h2{
-margin-bottom:20px;
-}
-
-.sidebar button{
-width:100%;
-margin:6px 0;
-padding:10px;
-border:none;
-border-radius:8px;
-background:#1e293b;
-color:white;
-cursor:pointer;
-}
-
-.sidebar button:hover{
-background:#6366f1;
-}
-
-/* Main */
-.main{
-flex:1;
-padding:20px;
-}
-
-.header{
-font-size:24px;
-margin-bottom:20px;
-}
-
-.box{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-}
-
-input, select{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:8px;
-border:none;
-}
-
-button.generate{
-width:100%;
-margin-top:15px;
-padding:12px;
-border:none;
-border-radius:8px;
-background:linear-gradient(90deg,#6366f1,#a855f7);
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-.reply{
-background:#020617;
-padding:15px;
-border-radius:10px;
-margin-top:10px;
-}
-
-.actions{
-display:flex;
-gap:10px;
-margin-top:10px;
-}
-
-.actions button{
-flex:1;
-padding:8px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.copy{
-background:#f59e0b;
-}
-
-.wa{
-background:#22c55e;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- Sidebar -->
-<div class="sidebar">
-<h2>💼 Sales AI</h2>
-
-<button onclick="setType('dm')">DM Start</button>
-<button onclick="setType('follow')">Follow-up</button>
-<button onclick="setType('price')">Pricing</button>
-<button onclick="setType('deal')">Closing</button>
-
-</div>
-
-<!-- Main -->
-<div class="main">
-
-<div class="header">Create Smart Replies</div>
-
-<div class="box">
-
-<input id="userInput" placeholder="Client ne kya message kiya?">
-
-<select id="tone">
-<option value="pro">Professional</option>
-<option value="friendly">Friendly</option>
-<option value="bold">Confident</option>
-</select>
-
-<button class="generate" onclick="generate()">Generate Replies</button>
-
-<div id="output"></div>
-
-</div>
-
-</div>
-
-<script>
-
-let currentType = "dm";
-
-function setType(type){
-currentType = type;
-}
-
-/* Reply Database */
-const data = {
-
-dm:[
-"Hey! Thanks for reaching out 😊 How can I help you?",
-"Hi there! Glad you messaged. Tell me your requirement 👍",
-"Hello! I’d love to help you with your project."
-],
-
-follow:[
-"Just checking in 😊 Did you get a chance to see my last message?",
-"Hey! Following up on this. Let me know your thoughts.",
-"Hi again! I’m available if you need any help."
-],
-
-price:[
-"My price starts from ₹499 depending on your requirement.",
-"It will cost around ₹999 for this service. Let me know if that works.",
-"Pricing depends on details, but approx ₹799. I ensure quality work."
-],
-
-deal:[
-"Let’s finalize this 👍 I can start immediately.",
-"If you're ready, we can get started today.",
-"Looking forward to working with you! Shall we proceed?"
-]
-
-};
-
-/* Smart Generator */
-function generate(){
-
-let input = document.getElementById("userInput").value.toLowerCase();
-
-let replies = [...data[currentType]];
-
-/* smart variation */
-if(input.includes("price") || input.includes("cost")){
-replies = data.price;
-}
-
-if(input.includes("hello") || input.includes("hi")){
-replies = data.dm;
-}
-
-/* randomize */
-replies.sort(()=>0.5 - Math.random());
-
-let output = document.getElementById("output");
-output.innerHTML = "";
-
-replies.slice(0,3).forEach(r=>{
-
-let div = document.createElement("div");
-div.className = "reply";
-
-div.innerHTML = `
-${r}
-<div class="actions">
-<button class="copy" onclick="copyText('${r}')">Copy</button>
-<button class="wa" onclick="sendWA('${r}')">WhatsApp</button>
-</div>
-`;
-
-output.appendChild(div);
-
-});
-
-}
-
-/* Copy */
-function copyText(text){
-navigator.clipboard.writeText(text);
-alert("Copied!");
-}
-
-/* WhatsApp */
-function sendWA(text){
-window.open("https://wa.me/?text="+encodeURIComponent(text));
-}
-
-</script>
-
-</body>
-</html> html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sales Message AI</title>
+<title>Smart Planner AI</title>
 
 <style>
 body{
-  margin:0;
-  font-family:sans-serif;
-  background:#0f172a;
-  color:#fff;
-  display:flex;
-  justify-content:center;
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
 }
-
 .container{
-  width:100%;
-  max-width:420px;
-  padding:20px;
+    max-width:400px;
+    margin:40px auto;
+    padding:20px;
+    background:#020617;
+    border-radius:15px;
 }
-
-h1{
-  text-align:center;
-  margin-bottom:20px;
+h1{text-align:center;}
+select,input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
 }
-
-textarea, select, button{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  border:none;
-}
-
-textarea{
-  height:80px;
-}
-
 button{
-  background:#22c55e;
-  color:#fff;
-  font-weight:bold;
+    width:100%;
+    padding:12px;
+    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    border:none;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
 }
-
-.reply{
-  background:#1e293b;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:8px;
-}
-
-.copy{
-  background:#f59e0b;
-  flex:1;
-}
-
-.wa{
-  background:#25d366;
-  flex:1;
+.result{
+    margin-top:20px;
+    background:#1e293b;
+    padding:15px;
+    border-radius:10px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="container">
+<h1>⚡ Smart Planner</h1>
 
-<h1>💼 Sales Message AI</h1>
-
-<textarea id="msg" placeholder="Paste message..."></textarea>
-
-<select id="type">
-  <option value="auto">Auto Detect</option>
-  <option value="dm">DM Start</option>
-  <option value="pricing">Pricing</option>
-  <option value="followup">Follow Up</option>
-  <option value="closing">Closing</option>
+<select id="type" onchange="changeInput()">
+<option value="study">Study</option>
+<option value="work">Work</option>
+<option value="freelance">Freelance</option>
 </select>
 
-<button onclick="generate()">Generate Reply</button>
+<input type="text" id="customInput" placeholder="Enter Subject (Math, Science...)">
 
-<div id="output"></div>
+<input type="number" id="time" placeholder="Enter time (minutes)">
 
+<select id="goal">
+<option value="focus">Focus</option>
+<option value="complete">Complete Task</option>
+<option value="exam">Exam Prep</option>
+</select>
+
+<button onclick="generatePlan()">Generate Plan</button>
+
+<div class="result" id="result"></div>
 </div>
 
 <script>
 
-function random(arr){
-  return arr.sort(()=>0.5-Math.random()).slice(0,3);
+function changeInput(){
+    let type = document.getElementById("type").value;
+    let input = document.getElementById("customInput");
+
+    if(type === "study"){
+        input.placeholder = "Enter Subject (Math, Science...)";
+    } else {
+        input.placeholder = "Enter Task (Design, Editing...)";
+    }
 }
 
-function detectType(msg){
-  if(msg.includes("price") || msg.includes("kitna") || msg.includes("₹")) return "pricing";
-  if(msg.includes("hello") || msg.includes("hi")) return "dm";
-  if(msg.includes("?" )) return "followup";
-  return "closing";
-}
+function generatePlan(){
 
-function generate(){
+    let type = document.getElementById("type").value;
+    let input = document.getElementById("customInput").value || "Task";
+    let time = parseInt(document.getElementById("time").value) || 60;
+    let goal = document.getElementById("goal").value;
 
-let msg = document.getElementById("msg").value.toLowerCase();
-let type = document.getElementById("type").value;
+    let plans = [];
 
-if(type === "auto"){
-  type = detectType(msg);
-}
+    if(type === "study"){
+        plans = [
+            `📚 Study Plan:\n• 30 min ${input}\n• 10 min break\n• 20 min revision`,
+            `📚 Focus Plan:\n• 25 min ${input}\n• 5 min rest\n• Practice questions`,
+            `📚 Deep Study:\n• 40 min ${input}\n• 10 min break\n• Summary notes`
+        ];
+    }
 
-let replies = [];
+    if(type === "work" || type === "freelance"){
+        plans = [
+            `💼 Work Plan:\n• Start ${input} (30 min)\n• 10 min break\n• Continue work`,
+            `💼 Focus Work:\n• Work on ${input}\n• Complete main part\n• Review`,
+            `💼 Deep Work:\n• 40 min ${input}\n• Short break\n• Final check`
+        ];
+    }
 
-if(type === "dm"){
-replies = [
-"Hey 👋 thanks for reaching out!",
-"Hi 😊 kaise help kar sakta hu?",
-"Hello! Batao kya chahiye?"
-];
-}
+    // Random pick
+    let randomPlan = plans[Math.floor(Math.random()*plans.length)];
 
-if(type === "pricing"){
-replies = [
-"Price ₹499 hai 👍 interested ho?",
-"Sirf ₹499 me mil jayega 😊",
-"Affordable hai — ₹499 only 💯"
-];
-}
+    // Time adjustment (simple logic)
+    randomPlan += `\n\n⏱ Total Time: ${time} mins`;
+    
+    // Motivational line random
+    let motivation = [
+        "🔥 Stay focused!",
+        "💪 You can do it!",
+        "🚀 Keep going!",
+        "🎯 Finish strong!"
+    ];
 
-if(type === "followup"){
-replies = [
-"Still interested? 😊",
-"Update chahiye kya?",
-"Batana agar lena ho 👍"
-];
-}
+    let randomMotivation = motivation[Math.floor(Math.random()*motivation.length)];
 
-if(type === "closing"){
-replies = [
-"Chalo confirm karein? 🚀",
-"Aap ready ho toh start karte hain 👍",
-"Deal close karein? 😊"
-];
-}
-
-show(random(replies));
-}
-
-function show(arr){
-
-let out = document.getElementById("output");
-out.innerHTML = "";
-
-arr.forEach(r=>{
-  out.innerHTML += `
-  <div class="reply">
-    ${r}
-    <div class="actions">
-      <button class="copy" onclick="copyText('${r}')">Copy</button>
-      <button class="wa" onclick="sendWA('${r}')">WhatsApp</button>
-    </div>
-  </div>
-  `;
-});
-}
-
-function copyText(text){
-navigator.clipboard.writeText(text);
-alert("Copied!");
-}
-
-function sendWA(text){
-window.open("https://wa.me/?text="+encodeURIComponent(text));
+    document.getElementById("result").innerText = randomPlan + "\n\n" + randomMotivation;
 }
 
 </script>
