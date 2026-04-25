@@ -3,132 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Planner AI</title>
-
-<style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-}
-.container{
-    max-width:400px;
-    margin:40px auto;
-    padding:20px;
-    background:#020617;
-    border-radius:15px;
-}
-h1{text-align:center;}
-select,input{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-    border:none;
-    border-radius:8px;
-}
-button{
-    width:100%;
-    padding:12px;
-    background:linear-gradient(90deg,#7c3aed,#3b82f6);
-    border:none;
-    color:white;
-    border-radius:10px;
-    cursor:pointer;
-}
-.result{
-    margin-top:20px;
-    background:#1e293b;
-    padding:15px;
-    border-radius:10px;
-}
-</style>
-
+<title>SmartPlan</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-<h1>⚡ Smart Planner</h1>
+<!-- NAVBAR -->
+<nav class="nav">
+  <h2>⚡ SmartPlan</h2>
+  <div>
+    <a href="#">Home</a>
+    <a href="#">How It Works</a>
+    <a href="#">Features</a>
+    <a href="#">About</a>
+  </div>
+  <button class="btn">Try SmartPlan</button>
+</nav>
 
-<select id="type" onchange="changeInput()">
-<option value="study">Study</option>
-<option value="work">Work</option>
-<option value="freelance">Freelance</option>
-</select>
+<!-- HERO -->
+<section class="hero">
+  <h1>Plan Your Day. <span>Get Things Done.</span></h1>
+  <p>Generate your perfect study or work plan in 30 seconds.</p>
+</section>
 
-<input type="text" id="customInput" placeholder="Enter Subject (Math, Science...)">
+<!-- MAIN -->
+<section class="main">
 
-<input type="number" id="time" placeholder="Enter time (minutes)">
+  <!-- LEFT -->
+  <div class="card">
+    <h3>Let’s create your plan 🚀</h3>
 
-<select id="goal">
-<option value="focus">Focus</option>
-<option value="complete">Complete Task</option>
-<option value="exam">Exam Prep</option>
-</select>
+    <label>Time</label>
+    <select>
+      <option>30 min</option>
+      <option>1 hour</option>
+      <option>2 hours</option>
+    </select>
 
-<button onclick="generatePlan()">Generate Plan</button>
+    <label>Focus</label>
+    <select>
+      <option>Study</option>
+      <option>Work</option>
+      <option>Freelance</option>
+    </select>
 
-<div class="result" id="result"></div>
-</div>
+    <label>Goal</label>
+    <select>
+      <option>Exam Prep</option>
+      <option>Complete Task</option>
+    </select>
 
-<script>
+    <button class="btn full">Generate Plan ✨</button>
+  </div>
 
-function changeInput(){
-    let type = document.getElementById("type").value;
-    let input = document.getElementById("customInput");
+  <!-- RIGHT -->
+  <div class="card output">
+    <h3>Your Smart Plan</h3>
 
-    if(type === "study"){
-        input.placeholder = "Enter Subject (Math, Science...)";
-    } else {
-        input.placeholder = "Enter Task (Design, Editing...)";
-    }
-}
+    <div class="plan-item">📘 Study (30 min)</div>
+    <div class="plan-item">☕ Break (10 min)</div>
+    <div class="plan-item">📝 Practice (20 min)</div>
 
-function generatePlan(){
+    <div class="actions">
+      <button class="btn small">Copy</button>
+      <button class="btn small green">WhatsApp</button>
+    </div>
+  </div>
 
-    let type = document.getElementById("type").value;
-    let input = document.getElementById("customInput").value || "Task";
-    let time = parseInt(document.getElementById("time").value) || 60;
-    let goal = document.getElementById("goal").value;
+</section>
 
-    let plans = [];
+<!-- FEATURES -->
+<section class="features">
+  <div class="f-card">⚡ Saves Time</div>
+  <div class="f-card">🧠 Smart Plans</div>
+  <div class="f-card">🎯 Stay Focused</div>
+  <div class="f-card">📈 Build Habits</div>
+</section>
 
-    if(type === "study"){
-        plans = [
-            `📚 Study Plan:\n• 30 min ${input}\n• 10 min break\n• 20 min revision`,
-            `📚 Focus Plan:\n• 25 min ${input}\n• 5 min rest\n• Practice questions`,
-            `📚 Deep Study:\n• 40 min ${input}\n• 10 min break\n• Summary notes`
-        ];
-    }
-
-    if(type === "work" || type === "freelance"){
-        plans = [
-            `💼 Work Plan:\n• Start ${input} (30 min)\n• 10 min break\n• Continue work`,
-            `💼 Focus Work:\n• Work on ${input}\n• Complete main part\n• Review`,
-            `💼 Deep Work:\n• 40 min ${input}\n• Short break\n• Final check`
-        ];
-    }
-
-    // Random pick
-    let randomPlan = plans[Math.floor(Math.random()*plans.length)];
-
-    // Time adjustment (simple logic)
-    randomPlan += `\n\n⏱ Total Time: ${time} mins`;
-    
-    // Motivational line random
-    let motivation = [
-        "🔥 Stay focused!",
-        "💪 You can do it!",
-        "🚀 Keep going!",
-        "🎯 Finish strong!"
-    ];
-
-    let randomMotivation = motivation[Math.floor(Math.random()*motivation.length)];
-
-    document.getElementById("result").innerText = randomPlan + "\n\n" + randomMotivation;
-}
-
-</script>
+<!-- ABOUT -->
+<section class="about">
+  <h2>About</h2>
+  <p>This tool helps you plan your day without overthinking.</p>
+</section>
 
 </body>
 </html>
