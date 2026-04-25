@@ -4,113 +4,81 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SmartPlan</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  background:#020617;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  padding:20px;
+}
+
+.card {
+  background:#1e293b;
+  padding:20px;
+  border-radius:10px;
+  width:300px;
+  margin:auto;
+}
+
+button {
+  background:linear-gradient(90deg,#7c3aed,#3b82f6);
+  border:none;
+  padding:10px;
+  color:white;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.plan-item {
+  background:#0f172a;
+  margin:10px 0;
+  padding:10px;
+  border-radius:8px;
+}
+</style>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="nav">
-  <h2>⚡ SmartPlan</h2>
-  <div>
-    <a href="#">Home</a>
-    <a href="#">How It Works</a>
-    <a href="#">Features</a>
-    <a href="#">About</a>
-  </div>
-  <button class="btn">Try SmartPlan</button>
-</nav>
+<h2>⚡ Smart Planner</h2>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Plan Your Day. <span>Get Things Done.</span></h1>
-  <p>Generate your perfect study or work plan in 30 seconds.</p>
-</section>
+<div class="card">
 
-<!-- MAIN -->
-<section class="main">
+<select id="time">
+  <option>30 min</option>
+  <option>1 hour</option>
+</select>
 
-  <!-- LEFT -->
-  <div class="card">
-    <h3>Let’s create your plan 🚀</h3>
+<br><br>
 
-    <label>Time</label>
-    <select>
-      <option>30 min</option>
-      <option>1 hour</option>
-      <option>2 hours</option>
-    </select>
+<button id="generateBtn">Generate Plan</button>
 
-    <label>Focus</label>
-    <select>
-      <option>Study</option>
-      <option>Work</option>
-      <option>Freelance</option>
-    </select>
+<div id="planOutput"></div>
 
-    <label>Goal</label>
-    <select>
-      <option>Exam Prep</option>
-      <option>Complete Task</option>
-    </select>
+</div>
 
-    <button class="btn full">Generate Plan ✨</button>
-  </div>
-
-  <!-- RIGHT -->
-  <div class="card output">
-    <h3>Your Smart Plan</h3>
-
-    <div class="plan-item">📘 Study (30 min)</div>
-    <div class="plan-item">☕ Break (10 min)</div>
-    <div class="plan-item">📝 Practice (20 min)</div>
-
-    <div class="actions">
-      <button class="btn small">Copy</button>
-      <button class="btn small green">WhatsApp</button>
-    </div>
-  </div>
-
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-  <div class="f-card">⚡ Saves Time</div>
-  <div class="f-card">🧠 Smart Plans</div>
-  <div class="f-card">🎯 Stay Focused</div>
-  <div class="f-card">📈 Build Habits</div>
-</section>
-
-<!-- ABOUT -->
-<section class="about">
-  <h2>About</h2>
-  <p>This tool helps you plan your day without overthinking.</p>
-</section>
-
-</body>
-</html>
 <script>
 
 const btn = document.getElementById("generateBtn");
 const output = document.getElementById("planOutput");
-  <div id="planOutput">
-</div>
 
-btn.addEventListener("click", () => {
-  <button id="generateBtn" class="btn full">Generate Plan ✨</button>
+btn.addEventListener("click", function() {
 
   const plans = [
-    ["📘 Study (30 min)", "☕ Break (10 min)", "📝 Practice (20 min)"],
-    ["💻 Work (40 min)", "☕ Break (10 min)", "📊 Task Finish (30 min)"],
-    ["🎯 Focus Task (25 min)", "☕ Break (5 min)", "🔥 Deep Work (30 min)"],
-    ["📖 Revision (20 min)", "☕ Break (10 min)", "✍️ Notes (20 min)"]
+    ["📘 Study 30 min","☕ Break 10 min","📝 Practice 20 min"],
+    ["💻 Work 40 min","☕ Break 10 min","📊 Finish Task"],
+    ["🔥 Deep Work 25 min","☕ Break 5 min","🎯 Focus Session"]
   ];
 
-  let randomPlan = plans[Math.floor(Math.random() * plans.length)];
+  let random = plans[Math.floor(Math.random()*plans.length)];
 
   output.innerHTML = "";
 
-  randomPlan.forEach(item => {
+  random.forEach(item => {
     let div = document.createElement("div");
     div.className = "plan-item";
     div.innerText = item;
@@ -120,3 +88,6 @@ btn.addEventListener("click", () => {
 });
 
 </script>
+
+</body>
+</html>
