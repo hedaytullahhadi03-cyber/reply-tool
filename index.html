@@ -1,1 +1,105 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartPlan — Instant Plans for Any Goal</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body data-theme="light">
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">SP</div>
+    <div>
+      <h1>SmartPlan</h1>
+      <p>Get an instant, ready-to-start plan for anything.</p>
+    </div>
+  </div>
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</header>
+
+<main class="layout">
+  <section class="card form-card">
+    <h2>What do you want to do?</h2>
+
+    <label for="goal">Your goal</label>
+    <textarea id="goal" rows="3" placeholder="e.g. Revise chapter 5 of physics, finish project proposal, learn basic React..."></textarea>
+
+    <div class="row two">
+      <div>
+        <label for="time">How much time do you have?</label>
+        <div class="time-row">
+          <input id="time" type="number" min="5" max="1440" value="60" />
+          <select id="unit">
+            <option value="min">minutes</option>
+            <option value="hr">hours</option>
+          </select>
+        </div>
+        <div class="quick-times">
+          <button type="button" class="chip" data-mins="15">15 min</button>
+          <button type="button" class="chip" data-mins="30">30 min</button>
+          <button type="button" class="chip" data-mins="60">1 hr</button>
+          <button type="button" class="chip" data-mins="120">2 hr</button>
+          <button type="button" class="chip" data-mins="240">4 hr</button>
+        </div>
+      </div>
+      <div>
+        <label for="style">Plan style</label>
+        <select id="style">
+          <option value="balanced">Balanced (work + breaks)</option>
+          <option value="focused">Deep focus (long blocks)</option>
+          <option value="intensive">Intensive (no breaks)</option>
+        </select>
+
+        <label for="startTime" class="mt">Start time (optional)</label>
+        <input id="startTime" type="text" placeholder="e.g. 9:00 AM" />
+      </div>
+    </div>
+
+    <button id="generateBtn" class="btn primary big">Generate my plan</button>
+    <p class="hint" id="hint">SmartPlan will design a step-by-step plan that fits exactly in your time.</p>
+  </section>
+
+  <section class="card plan-card" id="planCard" hidden>
+    <div class="plan-head">
+      <div>
+        <h2 id="planTitle">Your plan</h2>
+        <p id="planSummary" class="hint"></p>
+      </div>
+      <div class="plan-meta">
+        <span id="planTotal" class="badge">0 min</span>
+      </div>
+    </div>
+
+    <div id="timeline" class="timeline"></div>
+
+    <div class="plan-actions">
+      <button id="copyBtn" class="btn">Copy as text</button>
+      <button id="restartBtn" class="btn ghost">New plan</button>
+      <button id="startTimerBtn" class="btn primary">Start timer</button>
+    </div>
+  </section>
+
+  <section class="card timer-card" id="timerCard" hidden>
+    <div class="timer-head">
+      <span class="badge" id="timerStep">Step 1 of 1</span>
+      <button id="closeTimer" class="x">×</button>
+    </div>
+    <h2 id="timerTask">Task</h2>
+    <p class="hint" id="timerDetail"></p>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="timer-bar"><div id="timerFill"></div></div>
+    <div class="timer-actions">
+      <button id="pauseBtn" class="btn">Pause</button>
+      <button id="skipBtn" class="btn ghost">Skip ›</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">Built with SmartPlan · powered by AI</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
