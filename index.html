@@ -90,4 +90,55 @@ btn.addEventListener("click", function() {
 </script>
 
 </body>
-</html>
+</html><script>
+
+const btn = document.getElementById("generateBtn");
+const output = document.getElementById("planOutput");
+
+btn.addEventListener("click", () => {
+
+  const plans = [
+    [
+      "📘 Mathematics (30 min)",
+      "☕ Break (10 min)",
+      "📝 Revision (10 min)",
+      "✍️ Practice (10 min)"
+    ],
+    [
+      "💻 Deep Work (40 min)",
+      "☕ Break (10 min)",
+      "📊 Task Finish (20 min)"
+    ],
+    [
+      "🔥 Focus Session (25 min)",
+      "☕ Break (5 min)",
+      "🎯 Goal Task (30 min)"
+    ],
+    [
+      "📖 Study Chapter (20 min)",
+      "☕ Break (10 min)",
+      "🧠 Notes (20 min)"
+    ]
+  ];
+
+  let randomPlan = plans[Math.floor(Math.random() * plans.length)];
+
+  // smooth reset animation
+  output.style.opacity = 0;
+
+  setTimeout(() => {
+    output.innerHTML = "";
+
+    randomPlan.forEach(item => {
+      let div = document.createElement("div");
+      div.className = "plan-item";
+      div.innerText = item;
+      output.appendChild(div);
+    });
+
+    output.style.opacity = 1;
+  }, 200);
+
+});
+
+</script>
